@@ -33,6 +33,10 @@ Checks cover internal links/anchors, no-script/no-external-asset invariants, hea
 
 Deploy this repository's `main` branch as a separate Railway service using the root `Dockerfile` and `railway.json`.
 
+Production project: `nexawal-website` (`6200b3d5-cc15-4f2a-a554-ec699fffca3d`). Service: `1a1770a0-c053-440d-8f1d-50dd1f5b6ea3`.
+Generated preview: https://nexawal-website-production.up.railway.app
+Canonical domain: https://nexawal.com (www redirects to apex after DNS/HTTPS validation).
+
 - Caddy listens on `0.0.0.0:$PORT` (8080 by default). Railway terminates HTTPS.
 - Health check: `/healthz`.
 - No database, volume, secrets, build-time tokens, or background jobs.
