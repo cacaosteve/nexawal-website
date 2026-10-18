@@ -50,7 +50,8 @@ test('live server routes, headers, and cache policy', { skip: !origin }, async (
     assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
     assert.match(response.headers.get('content-security-policy'), /script-src 'none'/);
     assert.match(response.headers.get('content-security-policy'), /connect-src 'none'/);
-    assert.equal(response.headers.get('server'), null);
+    // Railway adds its own edge header after our server strips Caddy's.
+    assert.ok([null, 'railway-hikari'].includes(response.headers.get('server')));
     assert.equal(response.headers.get('cache-control'), path.startsWith('/assets/') ? 'public, max-age=86400' : 'no-cache');
     await response.arrayBuffer();
   }
