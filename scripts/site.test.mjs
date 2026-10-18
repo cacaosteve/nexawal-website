@@ -37,8 +37,13 @@ test('no scripts, forms, third-party assets, or inline execution', async () => {
 });
 test('release status and illustrative data remain explicit', async () => {
   const home = await readFile(join(root, 'index.html'), 'utf8');
-  for (const text of ['not a stable-release promise', 'Illustrative interface', 'not undergone an independent security audit', 'clearnet HTTPS', 'does not yet link a store listing']) assert.ok(home.includes(text));
+  for (const text of ['Illustrative interface', 'not undergone an independent security audit', 'clearnet HTTPS', 'does not yet link a store listing']) assert.ok(home.includes(text));
   assert.doesNotMatch(home, /rpc\.nexatrode\.com|rates\.nexatrode\.com/);
+});
+test('requested homepage copy removals stay removed', async () => {
+  const home = await readFile(join(root, 'index.html'), 'utf8');
+  for (const text of ['not a stable-release promise', 'Is it ready for large amounts?', 'Does it support other coins or swaps?', 'Do I need my own node?', 'How do optional fiat estimates work?', 'Where can I get help or report a bug?', 'KEEP IT YOURS.', 'Your next move.', '<footer']) assert.ok(!home.includes(text), text);
+  assert.ok(home.includes('Is NexaWal custodial?'));
 });
 
 const origin = process.env.SITE_ORIGIN;
