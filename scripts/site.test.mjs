@@ -35,9 +35,10 @@ test('no scripts, forms, third-party assets, or inline execution', async () => {
   }
   assert.doesNotMatch(await readFile(join(root, 'assets/site.css'), 'utf8'), /@import|url\(/i);
 });
-test('release status and illustrative data remain explicit', async () => {
+test('real app screenshots and release status remain explicit', async () => {
   const home = await readFile(join(root, 'index.html'), 'utf8');
-  for (const text of ['Illustrative interface', 'not undergone an independent security audit', 'clearnet HTTPS', 'does not yet link a store listing']) assert.ok(home.includes(text));
+  for (const text of ['nexawal-ios-techno-wallet.jpg', 'nexawal-ios-standard-wallet.jpg', 'Actual app screens during sync', 'not undergone an independent security audit', 'clearnet HTTPS', 'does not yet link a store listing']) assert.ok(home.includes(text));
+  assert.doesNotMatch(home, /1\.240000|Example incoming transfer|Example outgoing transfer/);
   assert.doesNotMatch(home, /rpc\.nexatrode\.com|rates\.nexatrode\.com/);
 });
 test('requested homepage copy removals stay removed', async () => {
@@ -48,7 +49,7 @@ test('requested homepage copy removals stay removed', async () => {
 
 const origin = process.env.SITE_ORIGIN;
 test('live server routes, headers, and cache policy', { skip: !origin }, async () => {
-  for (const path of ['/', '/privacy/', '/terms/', '/robots.txt', '/sitemap.xml', '/assets/site.css?v=1', '/assets/nexawal.png']) {
+  for (const path of ['/', '/privacy/', '/terms/', '/robots.txt', '/sitemap.xml', '/assets/site.css?v=2', '/assets/nexawal.png', '/assets/nexawal-ios-techno-wallet.jpg', '/assets/nexawal-ios-standard-wallet.jpg']) {
     const response = await fetch(new URL(path, origin), { signal: AbortSignal.timeout(15000) });
     assert.equal(response.status, 200, path);
     assert.equal(response.headers.get('referrer-policy'), 'no-referrer');

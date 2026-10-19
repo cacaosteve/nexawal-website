@@ -5,10 +5,10 @@ Static, no-JavaScript website for [NexaWal](https://nexawal.com). Independent, o
 ## Design and content
 
 - Local assets and system fonts only; no analytics, cookies, forms, or third-party runtime dependencies.
-- Responsive layout, keyboard-accessible native FAQ and theme-preview controls, reduced-motion support.
-- Illustrative HTML/CSS wallet preview: all shown balances and transfers are examples, not real wallet data or a screenshot.
+- Responsive layout, keyboard-accessible native FAQ, reduced-motion support, and swipeable iOS wallet screenshots in Techno and standard appearances.
+- Wallet screenshots are real app captures taken during sync; displayed balance and progress are specific to those captures and are not a promise of wallet state or sync speed.
 - Platform links currently lead to source/build guides. Do not add store badges, audit claims, or F-Droid/WalletScrutiny endorsements without verifying them.
-- Icon reused from the NexaWal GPUI app (`assets/nexawal-256.png`). No real wallet screenshots or keys are included.
+- Icon reused from the NexaWal GPUI app (`assets/nexawal-256.png`). The site includes only public iOS UI captures—no keys, addresses, or transaction identifiers.
 - Privacy notice distinguishes this website from the app, RPC, rates, and explorer services. Platform terms are linked to their source rather than silently replaced.
 
 ## Check and run locally
