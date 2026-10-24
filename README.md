@@ -7,7 +7,8 @@ Static, no-JavaScript website for [NexaWal](https://nexawal.com). Independent, o
 - Local assets and system fonts only; no analytics, cookies, forms, or third-party runtime dependencies.
 - Responsive layout, keyboard-accessible native FAQ, reduced-motion support, and swipeable Android wallet screenshots in Techno and standard appearances.
 - Wallet screenshots are real app captures from a synced wallet. They display balances, transaction amounts, and shortened transaction-ID fragments specific to those captures; they contain no recovery seeds, private keys, or full wallet addresses.
-- Platform links currently lead to source/build guides. Do not add store badges, audit claims, or F-Droid/WalletScrutiny endorsements without verifying them.
+- The hero and Android platform card link to the verified public [Google Play listing](https://play.google.com/store/apps/details?id=com.nexatrode.nexawal). Source/build guides remain available for all clients.
+- iOS is marked “App Store coming soon”: App Store ID `6800561428` from Xcode returned HTTP 404 in the US, UK, and Australia on October 23, 2026. Add its store link only after verifying the listing is public. Do not add unverified store badges, audit claims, or F-Droid/WalletScrutiny endorsements.
 - Icon reused from the NexaWal GPUI app (`assets/nexawal-256.png`). The site includes public Android UI captures supplied for the website; see the screenshot disclosure above.
 - Privacy notice distinguishes this website from the app, RPC, rates, and explorer services. Platform terms are linked to their source rather than silently replaced.
 
