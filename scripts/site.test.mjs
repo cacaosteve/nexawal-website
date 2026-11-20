@@ -37,20 +37,25 @@ test('no scripts, forms, third-party assets, or inline execution', async () => {
 });
 test('real app screenshots and release status remain explicit', async () => {
   const home = await readFile(join(root, 'index.html'), 'utf8');
-  for (const text of ['nexawal-android-techno-wallet.jpg', 'nexawal-android-standard-wallet.jpg', 'Actual app screens from a synced wallet', 'Android · synced', 'not undergone an independent security audit', 'clearnet HTTPS', 'The iOS App Store listing is coming soon']) assert.ok(home.includes(text), text);
+  for (const text of ['nexawal-android-techno-wallet.jpg', 'nexawal-android-standard-wallet.jpg', 'Actual app screens from a synced wallet', 'Android · synced', 'not undergone an independent security audit', 'clearnet HTTPS', 'Download on the App Store']) assert.ok(home.includes(text), text);
   assert.doesNotMatch(home, /1\.240000|Example incoming transfer|Example outgoing transfer/);
   assert.doesNotMatch(home, /rpc\.nexatrode\.com|rates\.nexatrode\.com/);
 });
-test('verified Google Play links are accessible and source guides remain available', async () => {
+test('verified app store links are accessible and source guides remain available', async () => {
   const home = await readFile(join(root, 'index.html'), 'utf8');
   const storeLinks = [...home.matchAll(/<a\b[^>]*href="(https:\/\/(?:play\.google\.com|apps\.apple\.com)[^"]*)"[^>]*>/g)];
-  assert.equal(storeLinks.length, 2, 'hero and Android card both link to Google Play');
-  for (const [anchor, href] of storeLinks) {
+  assert.equal(storeLinks.length, 4, 'hero and platform cards link to both app stores');
+  for (const [anchor, href] of storeLinks.filter(([, href]) => href.startsWith('https://play.google.com/'))) {
     assert.equal(href, 'https://play.google.com/store/apps/details?id=com.nexatrode.nexawal');
     assert.match(anchor, /aria-label="Get NexaWal on Google Play"/);
     assert.match(anchor, /rel="noreferrer"/);
   }
-  assert.ok(home.includes('APP STORE COMING SOON'));
+  for (const [anchor, href] of storeLinks.filter(([, href]) => href.startsWith('https://apps.apple.com/'))) {
+    assert.equal(href, 'https://apps.apple.com/us/app/nexawal/id6800561428');
+    assert.match(anchor, /aria-label="Get NexaWal on the App Store"/);
+    assert.match(anchor, /rel="noreferrer"/);
+  }
+  assert.ok(home.includes('APP STORE</span>'));
   for (const repo of ['nexawal', 'nexawal-android', 'nexawal-gpui']) {
     assert.ok(home.includes(`href="https://github.com/Nexatrode/${repo}"`), repo);
   }
@@ -63,12 +68,12 @@ test('requested homepage copy removals stay removed', async () => {
 });
 
 const origin = process.env.SITE_ORIGIN;
-test('live homepage publishes the verified Google Play links', { skip: !origin }, async () => {
+test('live homepage publishes the verified app store links', { skip: !origin }, async () => {
   const response = await fetch(new URL('/', origin), { signal: AbortSignal.timeout(15000) });
   assert.equal(response.status, 200);
   const home = await response.text();
   assert.equal([...home.matchAll(/href="https:\/\/play\.google\.com\/store\/apps\/details\?id=com\.nexatrode\.nexawal"/g)].length, 2);
-  assert.ok(home.includes('APP STORE COMING SOON'));
+  assert.equal([...home.matchAll(/href="https:\/\/apps\.apple\.com\/us\/app\/nexawal\/id6800561428"/g)].length, 2);
   assert.doesNotMatch(home, /does not yet link a store listing/);
 });
 test('live server routes, headers, and cache policy', { skip: !origin }, async () => {
